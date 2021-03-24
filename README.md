@@ -1,1 +1,1 @@
-# leetcode_rust
+# leet.rs
