@@ -11,21 +11,14 @@ struct Solution;
 impl Solution {
     pub fn reverse(x: i32) -> i32 {
         let mut num = x as i64;
-        let mut arr = Vec::new();
+        let mut result: i64 = 0;
 
         while num != 0 {
-            arr.push(num % 10);
+            result = result * 10 + num % 10;
             num /= 10;
         }
 
-        let result: i64 = arr
-            .iter()
-            .rev()
-            .enumerate()
-            .map(|(i, a)| a * 10i64.pow(i as u32))
-            .fold(0, |sum, a| sum + a);
-
-        if result < -2i64.pow(31) || 2i64.pow(31) - 1 < result {
+        if result < (std::i32::MIN as i64) || (std::i32::MAX as i64) < result {
             return 0;
         }
 
