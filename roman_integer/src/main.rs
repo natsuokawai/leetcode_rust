@@ -19,60 +19,24 @@ impl Solution {
         let mut result = 0;
 
         while let Some(c) = chars.next() {
-            match c {
-                'I' => {
-                    if let Some(n) = chars.peek() {
-                        if *n == 'V' {
-                            result += 4;
-                            chars.next();
-                        } else if *n == 'X' {
-                            result += 9;
-                            chars.next();
-                        } else {
-                            result += 1;
-                        }
-                    } else {
-                        result += 1;
-                    }
-                },
-                'X' => {
-                    if let Some(n) = chars.peek() {
-                        if *n == 'L' {
-                            result += 40;
-                            chars.next();
-                        } else if *n == 'C' {
-                            result += 90;
-                            chars.next();
-                        } else {
-                            result += 10;
-                        }
-                    } else {
-                        result += 10;
-                    }
-                },
-                'C' => {
-                    if let Some(n) = chars.peek() {
-                        if *n == 'D' {
-                            result += 400;
-                            chars.next();
-                        } else if *n == 'M' {
-                            result += 900;
-                            chars.next();
-                        } else {
-                            result += 100;
-                        }
-                    } else {
-                        result += 100;
-                    }
-                },
-                _ => { result += Solution::roman_chat_to_int(c); },
+            let current_num = Solution::roman_char_to_int(c);
+
+            if let Some(n) = chars.peek() {
+                let next_num = Solution::roman_char_to_int(*n);
+                if current_num < next_num {
+                    result -= current_num;
+                } else {
+                    result += current_num;
+                }
+            } else {
+                result += current_num;
             }
         }
 
         result
     }
 
-    fn roman_chat_to_int(c: char) -> i32 {
+    fn roman_char_to_int(c: char) -> i32 {
         match c {
             'I' => 1,
             'V' => 5,
@@ -85,4 +49,3 @@ impl Solution {
         }
     }
 }
-
