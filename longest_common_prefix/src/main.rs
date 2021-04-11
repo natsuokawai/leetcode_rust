@@ -1,5 +1,3 @@
-use std::cmp::max;
-
 fn main() {
     assert_eq!(
         Solution::longest_common_prefix(vec![
@@ -19,17 +17,11 @@ fn main() {
         String::from("")
     );
     assert_eq!(
-        Solution::longest_common_prefix(vec![
-            String::from(""),
-            String::from("")
-        ]),
+        Solution::longest_common_prefix(vec![String::from(""), String::from("")]),
         String::from("")
     );
     assert_eq!(
-        Solution::longest_common_prefix(vec![
-            String::from("ab"),
-            String::from("a")
-        ]),
+        Solution::longest_common_prefix(vec![String::from("ab"), String::from("a")]),
         String::from("a")
     );
     assert_eq!(
@@ -57,12 +49,17 @@ impl Solution {
             if st.is_empty() {
                 return String::new();
             }
-            for i in 0..=max(st.len(), pre.len()) - 1 {
-                if st.chars().nth(i) != pre.chars().nth(i) {
+            for (i, c) in pre.chars().enumerate() {
+                if let Some(s) = st.chars().nth(i) {
+                    if s != c {
+                        pre = pre.chars().take(i).collect::<String>();
+                        break;
+                    }
+                } else {
                     pre = pre.chars().take(i).collect::<String>();
                     break;
                 }
-            } 
+            }
         }
 
         pre
