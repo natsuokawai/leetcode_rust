@@ -51,14 +51,12 @@ impl Solution {
             }
             for (i, c) in pre.chars().enumerate() {
                 if let Some(s) = st.chars().nth(i) {
-                    if s != c {
-                        pre = pre.chars().take(i).collect::<String>();
-                        break;
+                    if s == c {
+                        continue;
                     }
-                } else {
-                    pre = pre.chars().take(i).collect::<String>();
-                    break;
                 }
+                pre = pre.chars().take(i).collect::<String>();
+                break;
             }
         }
 
