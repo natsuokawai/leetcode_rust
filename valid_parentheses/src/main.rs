@@ -15,27 +15,15 @@ impl Solution {
         let mut parens = Vec::new();
 
         for c in s.chars() {
-            if c == '(' || c == '[' || c == '{' {
-                parens.push(c);
-            } else {
-                if let Some(p) = parens.pop() {
-                    if Self::pair(p) == c {
-                        continue;
-                    }
-                }
-                return false;
+            match c {
+                '(' => parens.push(')'),
+                '[' => parens.push(']'),
+                '{' => parens.push('}'),
+                ')' | ']' | '}' if Some(c) != parens.pop() => return false,
+                _ => (),
             }
         }
 
         parens.is_empty()
-    }
-
-    fn pair(c: char) -> char {
-        match c {
-            '(' => ')',
-            '[' => ']',
-            '{' => '}',
-            _ => panic!("Invalid character."),
-        }
     }
 }
