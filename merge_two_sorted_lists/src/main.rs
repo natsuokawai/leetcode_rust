@@ -44,13 +44,6 @@ pub struct ListNode {
     pub next: Option<Box<ListNode>>,
 }
 
-impl ListNode {
-    #[inline]
-    fn new(val: i32) -> Self {
-        ListNode { next: None, val }
-    }
-}
-
 struct Solution;
 
 impl Solution {
@@ -58,6 +51,23 @@ impl Solution {
         l1: Option<Box<ListNode>>,
         l2: Option<Box<ListNode>>,
     ) -> Option<Box<ListNode>> {
-        None
+        match (l1, l2) {
+            (None, None) => None,
+            (Some(n), None) => Some(n),
+            (None, Some(n)) => Some(n),
+            (Some(n1), Some(n2)) => {
+                if n1.val <= n2.val {
+                    Some(Box::new(ListNode {
+                        val: n1.val,
+                        next: Self::merge_two_lists(n1.next, Some(n2)),
+                    }))
+                } else {
+                    Some(Box::new(ListNode {
+                        val: n2.val,
+                        next: Self::merge_two_lists(n2.next, Some(n1)),
+                    }))
+                }
+            }
+        }
     }
 }
